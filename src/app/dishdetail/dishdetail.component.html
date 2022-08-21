@@ -1,7 +1,7 @@
 <div class="container" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column"
     fxLayoutAlign.gt-md="space-around center" fxLayoutGap="10px" fxLayoutGap.xs="0">
 
-    <div fxFlex="40" *ngIf="dish">
+    <div fxFlex="40" *ngIf="dish" [@visibility]="visibility">
         <mat-card>
             <mat-card-header>
                 <mat-card-title>
@@ -28,13 +28,14 @@
             <mat-spinner></mat-spinner>
             <h4>Loading . . . Please Wait</h4>
         </div>
+        <div fxFlex *ngIf="disherrMess">
+            <h2>Error</h2>
+            <h4>{{disherrMess}}</h4>
+        </div>
     </div>
-    <div fxFlex *ngIf="disherrMess">
-        <h2>Error</h2>
-        <h4>{{disherrMess}}</h4>
-      </div>
+    
 
-    <div fxFlex="40" *ngIf="dish">
+    <div fxFlex="40" *ngIf="dish" [@visibility]="visibility">
         <mat-list>
             <mat-list-item *ngFor="let comms of dish.comments">
                 <p matLine>{{ comms.comment }}</p>
@@ -47,32 +48,40 @@
                 <p matLine>-- {{ dishCommentForm.value.author}}</p>
             </mat-list-item>   
         </mat-list>
-        <div [hidden]="dish">
+
+        <div [hidden]="dish || disherrMess">
             <mat-spinner></mat-spinner>
             <h4>Loading . . . Please Wait</h4>
         </div>
+        <div fxFlex *ngIf="disherrMess">
+            <h2>Error</h2>
+            <h4>{{disherrMess}}</h4>
+        </div>
+
+        
+        <!--<div fxFlex fxFlexOffset="20px" class="form-size">
+            <h3>Send us your Feedback</h3>
+            <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>-->
+            <form novalidate [formGroup]="dishCommentForm" #cform="ngForm" (ngSubmit)="onSubmit()">
+              <p>
+                <mat-form-field class="half-width">
+                  <input matInput formControlName="author" placeholder="Name" type="text" required>
+                  <mat-error *ngIf="formErrors['author']">{{formErrors['author']}}</mat-error>
+                </mat-form-field>
+                </p>
+                <p>
+                    <mat-slider formControlName="rating" min="1" max="5" step="1" value="5" thumbLabel tickInterval="1"></mat-slider>
+                </p>
+              <p>
+                <mat-form-field class="full-width">
+                  <textarea matInput formControlName="comment" placeholder="Your Comment" rows=12 required></textarea>
+                </mat-form-field>
+              </p>
+              <button type="submit" mat-button class="background-primary text-floral-white" [disabled]="cform.form.invalid">Submit</button>
+            </form>
+          <!--</div>-->
     </div>
 
-    <div fxFlex fxFlexOffset="20px" class="form-size">
-        <!--<h3>Send us your Feedback</h3>
-        <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>-->
-        <form novalidate [formGroup]="dishCommentForm" #cform="ngForm" (ngSubmit)="onSubmit()">
-          <p>
-            <mat-form-field class="half-width">
-              <input matInput formControlName="author" placeholder="Name" type="text" required>
-              <mat-error *ngIf="formErrors['author']">{{formErrors['author']}}</mat-error>
-            </mat-form-field>
-            </p>
-            <p>
-                <mat-slider formControlName="rating" min="1" max="5" step="1" value="5" thumbLabel tickInterval="1"></mat-slider>
-            </p>
-          <p>
-            <mat-form-field class="full-width">
-              <textarea matInput formControlName="comment" placeholder="Your Comment" rows=12 required></textarea>
-            </mat-form-field>
-          </p>
-          <button type="submit" mat-button class="background-primary text-floral-white" [disabled]="cform.form.invalid">Submit</button>
-        </form>
-      </div>
+    
 
 </div>
