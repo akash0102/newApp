@@ -41,6 +41,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+import { MatSlider, MatSliderModule } from '@angular/material/slider';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,7 +73,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSelectModule,
     MatSlideToggleModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSliderModule
   ],
   providers: [
     DishService,
