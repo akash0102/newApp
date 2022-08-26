@@ -11,7 +11,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { visibility,flyInOut, expand } from '../animations/app.animation';
+import { visibility, flyInOut, expand } from '../animations/app.animation';
 
 @Component({
   selector: 'app-dishdetail',
@@ -90,7 +90,7 @@ export class DishdetailComponent implements OnInit {
   createForm() {
     this.dishCommentForm = this.fb.group({
       author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
-      rating : [5,Validators.required],
+      rating : [5, Validators.required],
       comment: ''
     });
 
@@ -127,8 +127,7 @@ export class DishdetailComponent implements OnInit {
     this.dishcopy.comments.push(this.dishComment);
     this.dishservice.putDish(this.dishcopy)
       .subscribe({next:dish => {
-        this.dish = dish; this.dishcopy = dish;
-      },
+        this.dish = dish; this.dishcopy = dish;},
       error:errmess => { this.dish = new Dish; this.dishcopy = new Dish; this.disherrMess = <any>errmess; }});
     //console.log(this.dishComment);
     this.dishCommentForm.reset({

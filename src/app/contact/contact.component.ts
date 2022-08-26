@@ -4,7 +4,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Feedback, ContactType } from '../shared/feedback';
 
-import { flyInOut } from '../animations/app.animation';
+import { visibility, flyInOut, expand } from '../animations/app.animation';
+
+import { FeedbackService } from '../services/feedback.service';
 
 @Component({
   selector: 'app-contact',
@@ -13,10 +15,12 @@ import { flyInOut } from '../animations/app.animation';
   host: {
     '[@flyInOut]': 'true',
     'style': 'display: block;'
-    },
-    animations: [
-      flyInOut()
-    ]
+  },
+  animations: [
+    flyInOut(),
+    visibility(),
+    expand()
+  ]
 })
 export class ContactComponent implements OnInit {
 
@@ -24,37 +28,40 @@ export class ContactComponent implements OnInit {
   feedback!: Feedback;
   contactType = ContactType;
 
-  formErrors:{[key:string]:string} = {
+  formErrors: { [key: string]: string } = {
     'firstname': '',
     'lastname': '',
     'telnum': '',
     'email': ''
   };
 
-  validationMessages:{[key:string]:{[key:string]:string}} = {
+  validationMessages: { [key: string]: { [key: string]: string } } = {
     'firstname': {
-      'required':      'First Name is required.',
-      'minlength':     'First Name must be at least 2 characters long.',
-      'maxlength':     'FirstName cannot be more than 25 characters long.'
+      'required': 'First Name is required.',
+      'minlength': 'First Name must be at least 2 characters long.',
+      'maxlength': 'FirstName cannot be more than 25 characters long.'
     },
     'lastname': {
-      'required':      'Last Name is required.',
-      'minlength':     'Last Name must be at least 2 characters long.',
-      'maxlength':     'Last Name cannot be more than 25 characters long.'
+      'required': 'Last Name is required.',
+      'minlength': 'Last Name must be at least 2 characters long.',
+      'maxlength': 'Last Name cannot be more than 25 characters long.'
     },
     'telnum': {
-      'required':      'Tel. number is required.',
-      'pattern':       'Tel. number must contain only numbers.'
+      'required': 'Tel. number is required.',
+      'pattern': 'Tel. number must contain only numbers.'
     },
     'email': {
-      'required':      'Email is required.',
-      'email':         'Email not in valid format.'
+      'required': 'Email is required.',
+      'email': 'Email not in valid format.'
     },
   };
 
-  @ViewChild('fform') feedbackFormDirective: any;
 
-  constructor(private fb: FormBuilder) { 
+  feederrMess!: string;
+  visibility = 'preSubmit';
+
+  constructor(private feedbackService: FeedbackService,
+    private fb: FormBuilder) {
     this.createForm();
   }
 
@@ -63,14 +70,16 @@ export class ContactComponent implements OnInit {
 
   createForm() {
     this.feedbackForm = this.fb.group({
-      firstname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
-      lastname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
-      telnum: ['', [Validators.required, Validators.pattern] ],
-      email: ['', [Validators.required, Validators.email] ],
+      firstname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
+      lastname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
+      telnum: ['', [Validators.required, Validators.pattern]],
+      email: ['', [Validators.required, Validators.email]],
       agree: false,
       contacttype: 'None',
       message: ''
     });
+
+    //console.log(this.feedback);
 
     this.feedbackForm.valueChanges
       .subscribe(data => this.onValueChanged(data));
@@ -79,13 +88,13 @@ export class ContactComponent implements OnInit {
   }
 
   onValueChanged(data?: any) {
-    console.log(data);
+    //console.log(data);
     if (!this.feedbackForm) { return; }
     const form = this.feedbackForm;
     for (const field in this.formErrors) {
       if (this.formErrors.hasOwnProperty(field)) {
         // clear previous error message (if any)
-        this.formErrors[field]='';
+        this.formErrors[field] = '';
         const control = form.get(field);
         if (control && control.dirty && !control.valid) {
           const messages = this.validationMessages[field];
@@ -100,8 +109,19 @@ export class ContactComponent implements OnInit {
   }
 
   onSubmit() {
-    this.feedback = this.feedbackForm.value;
+    //this.feedback = this.feedbackForm.value;
     // console.log(this.feedback);
+    this.visibility = 'postSubmit';
+    this.feedbackService.submitFeedback(this.feedbackForm.value)
+      .subscribe({
+        next: feedback => { this.feedback = feedback; },
+        error: errmsg => { this.feedback = new Feedback(); this.feederrMess = <any>errmsg; }
+      });
+    //alert(this.feedback.firstname);
+    setTimeout(() => {
+      this.visibility = 'preSubmit'; this.feederrMess = '';
+      this.feedback = new Feedback();
+    }, 5000);
     this.feedbackForm.reset({
       firstname: '',
       lastname: '',
@@ -111,9 +131,9 @@ export class ContactComponent implements OnInit {
       contacttype: 'None',
       message: ''
     });
-    this.feedbackFormDirective.resetForm();
+
+
   }
 
 
-  
 }
