@@ -94,11 +94,13 @@
       <div fxFlex *ngIf="feedback!=undefined" [@expand]>
         <h4>Your Submission</h4>
         <mat-list>
-          <mat-list-item>firstname {{ feedback.firstname }}</mat-list-item>
-          <mat-list-item>lastname {{ feedback.lastname }}</mat-list-item>
-          <mat-list-item>Telephone {{ feedback.telnum }}</mat-list-item>
-          <mat-list-item>email {{ feedback.email }}</mat-list-item>
-          <mat-list-item>feeback {{ feedback.message }}</mat-list-item>
+          <mat-list-item>First Name: {{ feedback.firstname }}</mat-list-item>
+          <mat-list-item>Last Name: {{ feedback.lastname }}</mat-list-item>
+          <mat-list-item>Tel. Number: {{ feedback.telnum }}</mat-list-item>
+          <mat-list-item>Email: {{ feedback.email }}</mat-list-item>
+          <mat-list-item>Contact you?: {{ feedback.agree }}</mat-list-item>
+          <mat-list-item>How?: {{ feedback.contacttype }}</mat-list-item>
+          <mat-list-item>Feeback: {{ feedback.message }}</mat-list-item>
         </mat-list>
       </div>
     </div>
