@@ -1,5 +1,7 @@
 # NewApp
 
+This is a project created as a part of Coursera Course - Front-End JavaScript Frameworks: Angular.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0.
 
 ## Development server
