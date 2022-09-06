@@ -50,6 +50,9 @@ import { baseURL } from './shared/baseurl';
 import { ProcessHTTPMsgService } from './service/process-httpmsg.service';
 import { HighlightDirective } from './directives/highlight.directive';
 
+import { UserService } from './services/user.service';
+import { RegisterComponent } from './register/register.component';
+
 
 @NgModule({
   declarations: [
@@ -62,7 +65,8 @@ import { HighlightDirective } from './directives/highlight.directive';
     HomeComponent,
     ContactComponent,
     LoginComponent,
-    HighlightDirective
+    HighlightDirective,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -91,6 +95,7 @@ import { HighlightDirective } from './directives/highlight.directive';
     LeaderService,
     PromotionService,
     ProcessHTTPMsgService,
+    UserService,
     {provide: 'BaseURL', useValue: baseURL}
   ],
   entryComponents: [

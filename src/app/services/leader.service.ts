@@ -5,7 +5,7 @@ import { Leader } from '../shared/leader';
 import { Observable } from 'rxjs';
 
 import { map, catchError } from 'rxjs/operators';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { baseURL } from '../shared/baseurl';
 import { ProcessHTTPMsgService } from '../service/process-httpmsg.service';
 

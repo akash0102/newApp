@@ -79,8 +79,6 @@ export class ContactComponent implements OnInit {
       message: ''
     });
 
-    //console.log(this.feedback);
-
     this.feedbackForm.valueChanges
       .subscribe(data => this.onValueChanged(data));
 
@@ -109,15 +107,12 @@ export class ContactComponent implements OnInit {
   }
 
   onSubmit() {
-    //this.feedback = this.feedbackForm.value;
-    // console.log(this.feedback);
     this.visibility = 'postSubmit';
     this.feedbackService.submitFeedback(this.feedbackForm.value)
       .subscribe({
         next: feedback => { this.feedback = feedback; },
         error: errmsg => { this.feedback = new Feedback(); this.feederrMess = <any>errmsg; }
       });
-    //alert(this.feedback.firstname);
     setTimeout(() => {
       this.visibility = 'preSubmit'; this.feederrMess = '';
       this.feedback = new Feedback();
@@ -131,7 +126,6 @@ export class ContactComponent implements OnInit {
       contacttype: 'None',
       message: ''
     });
-
 
   }
 
