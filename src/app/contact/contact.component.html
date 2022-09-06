@@ -39,6 +39,8 @@
     <!--<p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>-->
   </div>
   <div [ngSwitch]="visibility">
+    <!-- ngSwitch used to display and hide form and loading/feedback div preSubmit displays the form
+       postSubmit displays the loading div and the feedback details div -->
     <div fxFlex fxFlexOffset="20px" class="form-size" *ngSwitchCase="'preSubmit'">
       <form novalidate [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()">
         <p>
@@ -82,6 +84,7 @@
           [disabled]="fform.invalid">Submit</button>
       </form>
     </div>
+    <!-- this is the div that is enabled after submitting the form -->
     <div fxFlex fxFlexOffset="20px" class="form-size" *ngSwitchCase="'postSubmit'">
       <div [hidden]=" feedback || feederrMess" [@expand]>
         <mat-spinner></mat-spinner>

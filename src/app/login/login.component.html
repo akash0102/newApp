@@ -12,11 +12,11 @@
     <p>
       <mat-form-field>
         <input matInput placeholder="Username" type="text" [(ngModel)]="user.id" name="username"  #id="ngModel" required>
-        <mat-error *ngIf="id.errors?.['required']">Username is required</mat-error>
+        <mat-error *ngIf="id.errors?.['required']">Please enter correct Username</mat-error>
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Password" type="password" [(ngModel)]="user.password" name="password" #password="ngModel" required>
-        <mat-error *ngIf="password.errors?.['required']">Password is required</mat-error>
+        <mat-error *ngIf="password.errors?.['required']">Please check Password</mat-error>
       </mat-form-field>
       <!--<mat-checkbox [(ngModel)]="user.remember" name="remember">Remember Me</mat-checkbox>-->
     </p>
@@ -24,6 +24,12 @@
   <mat-dialog-actions>
     <span class="flex-spacer"></span>
     <button mat-button mat-dialog-close>Cancel</button>
+    <a mat-button (click)="openRegForm()"><span class="fa fa-lg"></span> Register</a>
     <button type="submit" mat-button class="background-primary text-floral-white" [disabled]="loginForm.form.invalid" >Login</button>
   </mat-dialog-actions>
+  <mat-dialog-content>
+    <mat-error *ngIf="usererrMess">
+      User {{usererrMess}}
+    </mat-error>
+  </mat-dialog-content>
 </form>

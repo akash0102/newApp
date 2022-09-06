@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { RegisterComponent } from '../register/register.component';
@@ -12,6 +12,8 @@ import { User } from '../shared/user';
 })
 export class LoginComponent implements OnInit {
 
+  @ViewChild('loginForm') loginFormDirective: any;
+
   //user = {username: '', password: '', remember: false};
   user: User={
     id: '', 
@@ -23,21 +25,23 @@ export class LoginComponent implements OnInit {
     loggedIn: false
   };
 
-  userService!:UserService;
   usererrMess!: string;
+  loginform: any;
 
-  constructor(public dialogRef: MatDialogRef<LoginComponent>, public dialog: MatDialog,
-    @Inject('BaseURL') public baseURL:any ) { }
+  constructor(public dialogRef: MatDialogRef<LoginComponent>, 
+    public dialog: MatDialog,
+    @Inject('BaseURL') public baseURL:any,
+    private userService: UserService ) { }
 
   ngOnInit(): void {
   }
 
   onSubmit() {
-    //console.log('User: ', this.user);
     this.userService.getUser(this.user.id, this.user.password).subscribe({next:() => {
-      this.user.loggedIn=this.user.id;},
-    error:errmess => { this.user = new User; this.usererrMess = <any>errmess; }});
-    this.dialogRef.close();
+      this.user.loggedIn=this.user.id; this.dialogRef.close();},
+    error:errmess => { this.user = new User; this.usererrMess = errmess;}});
+    this.loginFormDirective.resetForm()
+    //this.dialogRef.close();
   }
 
   openRegForm() {

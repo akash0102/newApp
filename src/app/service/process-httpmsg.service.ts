@@ -15,10 +15,18 @@ export class ProcessHTTPMsgService {
 
     if (error.error instanceof ErrorEvent) {
       errMsg = error.error.message;
-    } else {
+    }
+    else if (error.url == undefined) {
+      errMsg = "Not Found";
+    }
+    else if (error.url.includes("user")) {
+      errMsg = error.statusText;
+    }
+    else {
+      console.log(error);
       errMsg = `${error.status} - ${error.statusText || ''} ${error.error}`;
     }
 
-    return throwError(()=>errMsg);
+    return throwError(() => errMsg);
   }
 }

@@ -270,5 +270,33 @@
       "id": 2
     }
   ],
-  "user" : [ ]
+  "user": [
+    {
+      "firstname": "jksdhfkslaf",
+      "lastname": "sdkfjbk",
+      "telnum": "2342353542",
+      "email": "asdlk@adf.asf",
+      "password": "laflds",
+      "loggedIn": false,
+      "id": "ks2353dk"
+    },
+    {
+      "firstname": "asdasd",
+      "lastname": "SDfasd",
+      "telnum": "4312341234",
+      "email": "sdfk3@sdf.sdfsdf",
+      "password": "sdfksdf",
+      "loggedIn": false,
+      "id": "sd2341Df"
+    },
+    {
+      "firstname": "abcde",
+      "lastname": "asdasd",
+      "telnum": "1234567890",
+      "email": "asdad@af.as",
+      "password": "Test12",
+      "loggedIn": false,
+      "id": "bc4567sd"
+    }
+  ]
 }
