@@ -52,6 +52,7 @@ import { HighlightDirective } from './directives/highlight.directive';
 
 import { UserService } from './services/user.service';
 import { RegisterComponent } from './register/register.component';
+import { AESEncDecServiceService } from './services/aesenc-dec-service.service';
 
 
 @NgModule({
@@ -96,6 +97,7 @@ import { RegisterComponent } from './register/register.component';
     PromotionService,
     ProcessHTTPMsgService,
     UserService,
+    AESEncDecServiceService,
     {provide: 'BaseURL', useValue: baseURL}
   ],
   entryComponents: [
